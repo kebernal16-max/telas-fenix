@@ -5,9 +5,18 @@ body {
     font-family: 'Segoe UI', sans-serif; background-color: var(--oscuro); color: white;
     background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('ave-fenix.jpg');
     background-size: cover; background-attachment: fixed; background-position: center;
+    overflow-x: hidden; /* Evita el movimiento hacia los lados */
 }
 
 .hidden { display: none !important; }
+
+/* REGLA DE ORO PARA EL ZOOM: */
+img {
+    max-width: 100%; /* La imagen nunca será más ancha que el celular */
+    height: auto;    /* Mantiene la proporción para que no se estire */
+    display: block;
+    margin: 0 auto;
+}
 
 #cart-icon {
     position: fixed; top: 15px; right: 15px; background: var(--rojo);
@@ -15,11 +24,38 @@ body {
     font-weight: bold; border: 1px solid white;
 }
 
-/* Galería */
-.detalle-galeria { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-#imagen-principal { width: 100%; max-width: 400px; border-radius: 10px; border: 1px solid #333; }
-.miniaturas-flex { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-.miniatura-foto { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; cursor: pointer; border: 2px solid transparent; }
+/* Galería y Contenedores */
+.detalle-galeria { 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 10px; 
+}
+
+#imagen-principal { 
+    width: 90%; /* Deja un pequeño margen a los lados */
+    max-width: 400px; 
+    border-radius: 10px; 
+    border: 1px solid #333; 
+}
+
+.miniaturas-flex { 
+    display: flex; 
+    gap: 8px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    width: 100%;
+}
+
+.miniatura-foto { 
+    width: 60px; 
+    height: 60px; 
+    object-fit: cover; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    border: 2px solid transparent; 
+}
 .miniatura-foto.activa { border-color: var(--rojo); }
 
 /* Cuadros de texto */
@@ -27,16 +63,29 @@ body {
 .cuadro-info p { color: #ffcc00; font-weight: bold; font-size: 0.9rem; }
 .cuadro-info small { display: block; color: #ccc; margin-top: 5px; }
 
-/* El descuento sorpresa */
 .cuadro-descuento { 
     background: rgba(40, 167, 69, 0.2); border: 1px solid var(--verde); 
     color: #fff; padding: 10px; text-align: center; border-radius: 5px; 
     margin: 10px 0; font-weight: bold; font-size: 0.85rem;
 }
 
-.detalle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 20px; max-width: 1000px; margin: auto; }
-@media (max-width: 768px) { .detalle-grid { grid-template-columns: 1fr; } }
+/* Diseño responsivo para evitar el "Zoom" */
+.detalle-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+    padding: 15px; 
+    max-width: 100%; 
+}
 
-input, select { width: 100%; padding: 12px; margin: 10px 0; background: #222; color: white; border: 1px solid #444; border-radius: 5px; }
+@media (max-width: 768px) { 
+    .detalle-grid { 
+        grid-template-columns: 1fr; /* Pone una cosa debajo de la otra en celular */
+        padding: 10px;
+    }
+    h1 { font-size: 1.5rem; }
+}
+
+input, select { width: 100%; padding: 12px; margin: 10px 0; background: #222; color: white; border: 1px solid #444; border-radius: 5px; font-size: 16px; /* Evita zoom en iPhone al escribir */ }
 .btn-rojo { background: var(--rojo); color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
 .btn-whatsapp { background: #25d366; color: white; border: none; padding: 15px; width: 100%; border-radius: 5px; font-weight: bold; cursor: pointer; }
