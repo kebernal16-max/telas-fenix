@@ -1,128 +1,30 @@
-let carrito = [];
-let productoActual = {};
+/* ... (Todo lo anterior se mantiene igual) ... */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --rojo: #cc0000; --oscuro: #000; }
 
-const fotosProductos = {
-    'fenix': ['fenix1.jpg'], 
-    'estandar': ['estandar1.jpg'],
-    'capuchon': ['cap-mixto.jpg']
-};
+body { font-family: sans-serif; background-color: var(--oscuro); color: white; line-height: 1.6; }
+.hidden { display: none !important; }
 
-// --- FUNCIONES DE NAVEGACIÓN ---
-function abrirAyuda() {
-    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-    document.getElementById('seccion-ayuda').classList.remove('hidden');
-}
+#cart-icon { position: fixed; top: 15px; right: 15px; background: var(--rojo); padding: 10px 18px; border-radius: 30px; z-index: 1000; cursor: pointer; display: flex; flex-direction: column; align-items: center; box-shadow: 0 4px 15px rgba(204, 0, 0, 0.5); border: 2px solid white; }
+.cart-wrapper { display: flex; align-items: center; gap: 8px; }
+#cart-count { background: white; color: var(--rojo); font-weight: bold; border-radius: 50%; padding: 2px 10px; font-size: 15px; }
+.cart-text { font-size: 10px; font-weight: bold; color: white; margin-top: 2px; }
 
-function cerrarAyuda() {
-    document.getElementById('seccion-ayuda').classList.add('hidden');
-    mostrarCatalogo();
-}
+.aviso-fotos { color: #ffcc00; font-size: 0.8rem; text-align: center; margin-bottom: 15px; font-style: italic; }
 
-function mostrarCatalogo() {
-    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-    document.getElementById('catalogo').classList.remove('hidden');
-}
+textarea { width: 100%; background: #222; color: white; border: 1px solid #444; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-family: sans-serif; resize: vertical; }
+select, input { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; background: #222; color: white; border: 1px solid #444; }
 
-function volverAlCatalogo() {
-    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-    document.getElementById('catalogo').classList.remove('hidden');
-}
+.pago-info { color: #00ffcc; text-align: center; font-weight: bold; margin: 15px 0; font-size: 0.9rem; }
 
-// --- FUNCIONES DE PRODUCTO ---
-function verDetalle(tipo) {
-    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-    document.getElementById('detalle-tecnico').classList.remove('hidden');
-    
-    const select = document.getElementById('opcion-producto');
-    select.innerHTML = "";
-    document.getElementById('personalizacion-texto').value = "";
+.botones-carrito-acciones { display: flex; gap: 10px; margin-bottom: 20px; }
+.btn-blanco { background: white; color: black; border: none; padding: 10px; border-radius: 5px; flex: 1; font-weight: bold; cursor: pointer; }
+.btn-gris { background: #333; color: white; border: none; padding: 10px; border-radius: 5px; flex: 1; cursor: pointer; }
 
-    if (tipo === 'fenix') {
-        productoActual = { nombre: "Línea Fénix Premium", precio: 95000 };
-        ['S', 'M', 'L', 'XL'].forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
-    } else if (tipo === 'estandar') {
-        productoActual = { nombre: "Línea Estándar", precio: 85000 };
-        ['S', 'M', 'L', 'XL'].forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
-    } else if (tipo === 'capuchon') {
-        productoActual = { nombre: "Capuchón", precio: 12000 };
-        select.innerHTML = '<option value="Dacron" data-p="12000">Dacrón ($12.000)</option><option value="Mixto" data-p="14000">Mixto ($14.000)</option><option value="Drill" data-p="16000">Drill ($16.000)</option>';
-    }
-
-    document.getElementById('imagen-principal').src = fotosProductos[tipo][0];
-    document.getElementById('detalle-titulo').innerText = productoActual.nombre;
-    actualizarCalculos();
-}
-
-function actualizarCalculos() {
-    const cant = parseInt(document.getElementById('cantidad-input').value) || 1;
-    let precio = productoActual.precio;
-    const sel = document.getElementById('opcion-producto');
-    if(sel.selectedOptions[0]?.dataset.p) precio = parseInt(sel.selectedOptions[0].dataset.p);
-    document.getElementById('subtotal-valor').innerText = "$" + (precio * cant).toLocaleString();
-    document.getElementById('precio-unitario').innerText = "$" + precio.toLocaleString();
-}
-
-// --- FUNCIONES DE CARRITO ---
-function agregarAlCarrito() {
-    const cant = parseInt(document.getElementById('cantidad-input').value);
-    const opcion = document.getElementById('opcion-producto').value;
-    const color = document.getElementById('color-prenda').value;
-    const detalle = document.getElementById('personalizacion-texto').value;
-    const precio = parseInt(document.getElementById('precio-unitario').innerText.replace('$','').replace('.','').replace('.',''));
-    
-    carrito.push({ 
-        nombre: productoActual.nombre, 
-        opcion, 
-        color,
-        detalle: detalle || "Sin detalles adicionales",
-        cant, 
-        subtotal: precio * cant 
-    });
-    
-    document.getElementById('cart-count').innerText = carrito.length;
-    alert("¡Añadido! Puedes seguir comprando o confirmar tu pedido arriba.");
-    volverAlCatalogo();
-}
-
-function irAlCarrito() {
-    if(carrito.length === 0) return alert("El carrito está vacío.");
-    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-    document.getElementById('carrito-seccion').classList.remove('hidden');
-    
-    const lista = document.getElementById('lista-carrito');
-    lista.innerHTML = "";
-    let total = 0;
-    carrito.forEach(i => {
-        total += i.subtotal;
-        lista.innerHTML += `<div style="border-bottom: 1px solid #333; padding: 10px 0;">
-            <p><strong>${i.cant}x ${i.nombre}</strong> (${i.opcion})</p>
-            <p style="font-size: 0.9rem; color: #ccc;">Color: ${i.color} | Detalle: ${i.detalle}</p>
-            <p>Subtotal: $${i.subtotal.toLocaleString()}</p>
-        </div>`;
-    });
-    document.getElementById('total-precio').innerText = "$" + total.toLocaleString();
-}
-
-function vaciarCarrito() {
-    if(confirm("¿Seguro que quieres borrar todo tu pedido?")) {
-        carrito = [];
-        document.getElementById('cart-count').innerText = "0";
-        volverAlCatalogo();
-    }
-}
-
-function enviarWhatsApp() {
-    const nombre = document.getElementById('nombre-cliente').value;
-    if(!nombre) return alert("Por favor, ingresa tu nombre.");
-    
-    let msj = `Hola Andrea, soy ${nombre}. Mi pedido de Reyand Clothing es:\n\n`;
-    carrito.forEach(i => {
-        msj += `✅ *${i.cant}x ${i.nombre}*\n`;
-        msj += `   - Talla/Mat: ${i.opcion}\n`;
-        msj += `   - Color: ${i.color}\n`;
-        msj += `   - Detalle: ${i.detalle}\n`;
-        msj += `   - Valor: $${i.subtotal.toLocaleString()}\n\n`;
-    });
-    msj += `*TOTAL A PAGAR: ${document.getElementById('total-precio').innerText}*`;
-    window.open(`https://wa.me/573184250115?text=${encodeURIComponent(msj)}`);
-}
+/* ... (Mantenemos el resto del diseño anterior) ... */
+.bienvenida-contenido { text-align: center; padding: 60px 20px; background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('ave-fenix.jpg') center/cover; min-height: 100vh; }
+.btn-rojo { background: var(--rojo); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+.contenedor-productos { padding: 20px; display: grid; gap: 20px; }
+.producto-card { background: #111; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #333; }
+.producto-card img { width: 100%; border-radius: 8px; }
+#imagen-principal { width: 100%; border-radius: 10px; margin-bottom: 10px; }
