@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Reyand Clothing - Catálogo</title>
+    <title>Reyand Clothing - Catálogo Oficial</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -29,92 +29,87 @@
     </section>
 
     <section id="seccion-ayuda" class="hidden">
-        <div class="contenido-ayuda" style="padding: 20px; text-align: center; color: white;">
-            <h2 style="margin-bottom: 20px;">¿Cómo comprar en Reyand Clothing?</h2>
-            <div class="paso-ayuda" style="text-align: left; background: #1a1a1a; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #cc0000;">
-                <p><strong>1. Elige tu prenda:</strong> Explora el catálogo y selecciona la línea que prefieras.</p>
-            </div>
-            <div class="paso-ayuda" style="text-align: left; background: #1a1a1a; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #cc0000;">
-                <p><strong>2. Personaliza:</strong> Elige color, talla y escribe los detalles de tus bordados.</p>
-            </div>
-            <div class="paso-ayuda" style="text-align: left; background: #1a1a1a; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #cc0000;">
-                <p><strong>3. Confirma:</strong> Ve al carrito (icono arriba a la derecha) y envía tu pedido por WhatsApp.</p>
+        <div style="padding: 20px; text-align: center;">
+            <h2>¿Cómo comprar?</h2>
+            <div style="text-align: left; background: #1a1a1a; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #cc0000;">
+                <p><strong>1. Elige:</strong> Selecciona tu prenda favorita.</p>
+                <p><strong>2. Personaliza:</strong> Dinos el color, talla y detalles.</p>
+                <p><strong>3. WhatsApp:</strong> Envía el resumen y coordinamos el pago.</p>
             </div>
             <button class="btn-rojo" onclick="cerrarAyuda()">¡ENTENDIDO!</button>
         </div>
     </section>
 
     <section id="catalogo" class="hidden">
-        <h2 class="titulo-seccion">NUESTRAS PRENDAS</h2>
-        <p class="aviso-fotos">⚠️ *Las fotos son ejemplos, recuerda que personalizamos a tu gusto.*</p>
+        <h2 style="text-align: center; margin: 20px 0;">NUESTRAS PRENDAS</h2>
+        <p class="aviso-fotos">⚠️ *Las fotos son ejemplos, personalizamos a tu gusto.*</p>
         <div class="contenedor-productos">
             <div class="producto-card" onclick="verDetalle('fenix')">
-                <img src="fenix1.jpg" alt="Fénix Premium">
+                <img src="fenix1.jpg" alt="Fénix">
                 <h3>Línea Fénix Premium</h3>
                 <p>Desde $95.000</p>
-                <button class="btn-ver">Ver Detalles</button>
+                <button class="btn-rojo">Ver Detalles</button>
             </div>
             <div class="producto-card" onclick="verDetalle('estandar')">
                 <img src="estandar1.jpg" alt="Estándar">
                 <h3>Línea Estándar</h3>
                 <p>Desde $85.000</p>
-                <button class="btn-ver">Ver Detalles</button>
+                <button class="btn-rojo">Ver Detalles</button>
             </div>
             <div class="producto-card" onclick="verDetalle('capuchon')">
-                <img src="cap-mixto.jpg" alt="Capuchones">
+                <img src="cap-mixto.jpg" alt="Capuchón">
                 <h3>Capuchones Industriales</h3>
                 <p>Desde $12.000</p>
-                <button class="btn-ver">Ver Detalles</button>
+                <button class="btn-rojo">Ver Detalles</button>
             </div>
         </div>
     </section>
 
     <section id="detalle-tecnico" class="hidden">
-        <button class="btn-volver" onclick="volverAlCatalogo()">← Volver</button>
+        <button onclick="volverAlCatalogo()" style="background:none; color:white; border:none; padding:10px; cursor:pointer;">← Volver al catálogo</button>
         <div class="detalle-grid">
-            <div class="detalle-galeria">
-                <img id="imagen-principal" src="" alt="Producto">
-                <div id="miniaturas-contenedor" class="miniaturas-flex"></div>
-            </div>
-            <div class="configurador">
-                <h2 id="detalle-titulo"></h2>
-                <div id="opciones-colores">
-                    <label>Color de la prenda:</label>
-                    <select id="color-prenda">
-                        <option value="Azul Oscuro">Azul Oscuro (Jean)</option>
-                        <option value="Negro">Negro</option>
-                        <option value="Verde Militar">Verde Militar</option>
-                        <option value="Gris">Gris</option>
-                        <option value="Otro">Otro (Especificar abajo)</option>
-                    </select>
-                </div>
-                <label>Talla o Material:</label>
-                <select id="opcion-producto" onchange="actualizarCalculos()"></select>
-                <label>Cantidad:</label>
-                <input type="number" id="cantidad-input" value="1" min="1" oninput="actualizarCalculos()">
-                
-                <label>¿Cómo la quieres? (Bordados, detalles):</label>
-                <textarea id="personalizacion-texto" placeholder="Ej: Bandera en brazo izquierdo, RH: O+, Nombre: Juan..."></textarea>
-                
-                <p>Precio: <span id="precio-unitario"></span></p>
-                <p>Subtotal: <strong id="subtotal-valor">$0</strong></p>
-                <button class="btn-rojo" onclick="agregarAlCarrito()">AÑADIR AL PEDIDO 🛒</button>
-            </div>
+            <img id="imagen-principal" src="" alt="Producto">
+            <h2 id="detalle-titulo"></h2>
+            
+            <label>Color de la prenda:</label>
+            <select id="color-prenda">
+                <option value="Azul Oscuro">Azul Oscuro</option>
+                <option value="Negro">Negro</option>
+                <option value="Verde Militar">Verde Militar</option>
+                <option value="Gris">Gris</option>
+                <option value="Otro">Otro (especificar abajo)</option>
+            </select>
+
+            <label>Talla o Material:</label>
+            <select id="opcion-producto" onchange="actualizarCalculos()"></select>
+
+            <label>Cantidad:</label>
+            <input type="number" id="cantidad-input" value="1" min="1" oninput="actualizarCalculos()">
+
+            <label>Detalles extras (Bordados, nombres):</label>
+            <textarea id="personalizacion-texto" placeholder="Ej: Nombre 'Juan' en el pecho..."></textarea>
+
+            <p>Precio: <span id="precio-unitario"></span></p>
+            <p>Subtotal: <strong id="subtotal-valor">$0</strong></p>
+            <button class="btn-rojo" onclick="agregarAlCarrito()">AÑADIR AL PEDIDO 🛒</button>
         </div>
     </section>
 
     <section id="carrito-seccion" class="hidden">
-        <h2>RESUMEN DE TU PEDIDO</h2>
-        <div id="lista-carrito"></div>
+        <h2 style="text-align: center; margin: 20px 0;">TU PEDIDO</h2>
+        <div id="lista-carrito" style="padding: 10px;"></div>
+        
         <div class="botones-carrito-acciones">
-            <button class="btn-blanco" onclick="volverAlCatalogo()">+ SEGUIR AGREGANDO</button>
-            <button class="btn-gris" onclick="vaciarCarrito()">🗑️ VACIAR CARRITO</button>
+            <button class="btn-blanco" onclick="volverAlCatalogo()">+ MÁS PRODUCTOS</button>
+            <button class="btn-gris" onclick="vaciarCarrito()">🗑️ LIMPIAR</button>
         </div>
-        <h3>TOTAL: <span id="total-precio">$0</span></h3>
-        <p class="pago-info">💳 *Recibimos Nequi, Daviplata o Efectivo*</p>
-        <div class="formulario-cliente">
-            <input type="text" id="nombre-cliente" placeholder="Tu Nombre Completo">
-            <button class="btn-whatsapp" onclick="enviarWhatsApp()">PEDIR POR WHATSAPP ✅</button>
+
+        <h3 style="text-align: center;">TOTAL: <span id="total-precio">$0</span></h3>
+        <p class="pago-info">💳 Recibimos Nequi, Daviplata o Efectivo</p>
+        
+        <div style="padding: 20px;">
+            <input type="text" id="nombre-cliente" placeholder="Escribe tu nombre">
+            <button class="btn-rojo" style="background: #25D366;" onclick="enviarWhatsApp()">ENVIAR A WHATSAPP ✅</button>
         </div>
     </section>
 
