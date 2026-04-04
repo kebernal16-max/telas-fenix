@@ -14,35 +14,27 @@ function cerrarAyuda() {
 function mostrarCatalogo() {
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
     document.getElementById('catalogo').classList.remove('hidden');
-    window.scrollTo(0,0);
 }
 
 function verDetalle(tipo) {
     document.getElementById('catalogo').classList.add('hidden');
     document.getElementById('detalle-tecnico').classList.remove('hidden');
     const select = document.getElementById('opcion-producto');
-    const infoContenedor = document.getElementById('contenedor-info-tecnica');
-    const imgPrincipal = document.getElementById('imagen-principal');
-    
+    const img = document.getElementById('imagen-principal');
     select.innerHTML = "";
-    
+
     if (tipo === 'fenix') {
-        productoActual = { nombre: "Línea Fénix Premium", precio: 95000, tipo: 'prenda' };
-        imgPrincipal.src = "fenix1.jpg";
+        productoActual = { nombre: "Línea Fénix Premium", precio: 95000 };
+        img.src = "fenix1.jpg";
         ['S', 'M', 'L', 'XL'].forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
-        infoContenedor.innerHTML = `<p>3 costuras y 4 broches. Bordado incluido.</p>`;
     } else if (tipo === 'estandar') {
-        productoActual = { nombre: "Línea Estándar", precio: 85000, tipo: 'prenda' };
-        imgPrincipal.src = "estandar1.jpg";
+        productoActual = { nombre: "Línea Estándar", precio: 85000 };
+        img.src = "estandar1.jpg";
         ['S', 'M', 'L', 'XL'].forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
-        infoContenedor.innerHTML = `<p>2 costuras y 1 broche. Bordado incluido.</p>`;
     } else if (tipo === 'capuchon') {
-        productoActual = { nombre: "Capuchón Industrial", precio: 12000, tipo: 'capuchon' };
-        imgPrincipal.src = "cap-mixto.jpg";
-        select.innerHTML = `
-            <option value="Dacron" data-p="12000">Dacrón ($12.000)</option>
-            <option value="Mixto" data-p="14000">Mixto ($14.000)</option>
-            <option value="Drill" data-p="16000">Drill ($16.000)</option>`;
+        productoActual = { nombre: "Capuchón", precio: 12000 };
+        img.src = "cap-mixto.jpg";
+        select.innerHTML = '<option value="Dacron" data-p="12000">Dacrón</option><option value="Mixto" data-p="14000">Mixto</option>';
     }
     document.getElementById('detalle-titulo').innerText = productoActual.nombre;
     actualizarCalculos();
@@ -51,40 +43,22 @@ function verDetalle(tipo) {
 function actualizarCalculos() {
     const cant = parseInt(document.getElementById('cantidad-input').value) || 1;
     let precio = productoActual.precio;
-    if(productoActual.tipo === 'capuchon') {
-        const sel = document.getElementById('opcion-producto');
-        precio = parseInt(sel.options[sel.selectedIndex].getAttribute('data-p'));
-    }
-    let total = precio * cant;
-    document.getElementById('precio-unitario').innerText = "$" + precio.toLocaleString('es-CO');
-    document.getElementById('subtotal-valor').innerText = "$" + total.toLocaleString('es-CO');
+    const sel = document.getElementById('opcion-producto');
+    if(sel.selectedOptions[0].dataset.p) precio = parseInt(sel.selectedOptions[0].dataset.p);
+    
+    document.getElementById('precio-unitario').innerText = "$" + precio.toLocaleString();
+    document.getElementById('subtotal-valor').innerText = "$" + (precio * cant).toLocaleString();
 }
 
 function agregarAlCarrito() {
     const cant = parseInt(document.getElementById('cantidad-input').value);
     const opcion = document.getElementById('opcion-producto').value;
+    const precio = parseInt(document.getElementById('precio-unitario').innerText.replace('$','').replace('.',''));
     
-    let precioFinal = productoActual.precio;
-    if(productoActual.tipo === 'capuchon') {
-        const sel = document.getElementById('opcion-producto');
-        precioFinal = parseInt(sel.options[sel.selectedIndex].getAttribute('data-p'));
-    }
-
-    carrito.push({
-        nombre: productoActual.nombre,
-        opcion: opcion,
-        cantidad: cant,
-        precio: precioFinal,
-        subtotal: precioFinal * cant
-    });
-
-    actualizarBadge();
-    alert("¡Producto añadido! Tienes " + carrito.length + " items.");
-    volverAlCatalogo();
-}
-
-function actualizarBadge() {
+    carrito.push({ nombre: productoActual.nombre, opcion, cant, subtotal: precio * cant });
     document.getElementById('cart-count').innerText = carrito.length;
+    alert("¡Añadido!");
+    volverAlCatalogo();
 }
 
 function volverAlCatalogo() {
@@ -95,35 +69,20 @@ function volverAlCatalogo() {
 function irAlCarrito() {
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
     document.getElementById('carrito-seccion').classList.remove('hidden');
-    renderizarCarrito();
-}
-
-function renderizarCarrito() {
     const lista = document.getElementById('lista-carrito');
     lista.innerHTML = "";
-    let totalPedido = 0;
-
-    carrito.forEach((item, index) => {
-        totalPedido += item.subtotal;
-        lista.innerHTML += `
-            <div style="border-bottom:1px solid #333; padding:10px;">
-                <p><strong>${item.nombre}</strong> (Talla/Mat: ${item.opcion})</p>
-                <p>${item.cantidad} x $${item.precio.toLocaleString()} = $${item.subtotal.toLocaleString()}</p>
-            </div>`;
+    let total = 0;
+    carrito.forEach(i => {
+        total += i.subtotal;
+        lista.innerHTML += `<p>${i.cant}x ${i.nombre} (${i.opcion}) - $${i.subtotal.toLocaleString()}</p>`;
     });
-    document.getElementById('total-precio').innerText = "$" + totalPedido.toLocaleString('es-CO');
+    document.getElementById('total-precio').innerText = "$" + total.toLocaleString();
 }
 
 function enviarWhatsApp() {
     const nombre = document.getElementById('nombre-cliente').value;
-    if(!nombre) return alert("Por favor pon tu nombre");
-    
-    let mensaje = `Hola Andrea, soy ${nombre}. Mi pedido es:\n\n`;
-    carrito.forEach(item => {
-        mensaje += `- ${item.cantidad} ${item.nombre} [${item.opcion}]: $${item.subtotal.toLocaleString()}\n`;
-    });
-    mensaje += `\n*TOTAL: ${document.getElementById('total-precio').innerText}*`;
-    
-    const url = `https://wa.me/573214828114?text=${encodeURIComponent(mensaje)}`;
-    window.open(url, '_blank');
+    if(!nombre) return alert("Pon tu nombre");
+    let msj = `Hola Andrea, soy ${nombre}. Pedido:\n`;
+    carrito.forEach(i => msj += `- ${i.cant} ${i.nombre} (${i.opcion})\n`);
+    window.open(`https://wa.me/573214828114?text=${encodeURIComponent(msj)}`);
 }
