@@ -27,14 +27,14 @@ function verDetalle(tipo) {
         fotos = ['fenix1.jpg', 'fenix2.jpg', 'fenix3.jpg'];
         ['S', 'M', 'L', 'XL'].forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
         infoContenedor.innerHTML = `
-            <div class="cuadro-info"><p>✨ PERSONALIZACIÓN:</p><small>Bordados: RH, Nombre/Apellido y Bandera.</small></div>
+            <div class="cuadro-info"><p>✨ PERSONALIZACIÓN INCLUIDA:</p><small>Todo va BORDADO: RH, Nombre y Bandera.</small></div>
             <div class="cuadro-info"><p>🛠 ESPECIFICACIONES:</p><small>Drill Vulcano, Triple costura, 4 broches.</small></div>`;
     } else if (tipo === 'estandar') {
         productoActual = { nombre: "Línea Estándar", precio: 85000, tipo: 'prenda' };
         fotos = ['estandar1.jpg', 'estandar2.jpg'];
         ['S', 'M', 'L', 'XL'].forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
         infoContenedor.innerHTML = `
-            <div class="cuadro-info"><p>✨ PERSONALIZACIÓN:</p><small>Bordados: RH, Nombre/Apellido y Bandera.</small></div>
+            <div class="cuadro-info"><p>✨ PERSONALIZACIÓN INCLUIDA:</p><small>Bordados: RH, Nombre y Bandera.</small></div>
             <div class="cuadro-info"><p>🛠 ESPECIFICACIONES:</p><small>Drill grueso o Jean, Doble costura, 1 broche.</small></div>`;
     } else if (tipo === 'capuchon') {
         productoActual = { nombre: "Capuchón Industrial", precio: 12000, tipo: 'capuchon' };
@@ -64,7 +64,8 @@ function verDetalle(tipo) {
 }
 
 function actualizarCalculos() {
-    const cant = parseInt(document.getElementById('cantidad-input').value) || 1;
+    const cantInput = document.getElementById('cantidad-input');
+    const cant = parseInt(cantInput.value) || 1;
     let precioBase = productoActual.precio;
     
     if(productoActual.tipo === 'capuchon') {
@@ -78,11 +79,11 @@ function actualizarCalculos() {
     if (productoActual.tipo === 'prenda') {
         if (cant >= 6 && cant < 12) {
             desc = 0.05;
-            msgBox.innerText = "¡Sorpresa! Has ganado un 5% de descuento por cantidad. 🎁";
+            msgBox.innerText = "¡Felicidades! Se aplicó un 5% de descuento por cantidad.";
             msgBox.classList.remove('hidden');
         } else if (cant >= 12) {
             desc = 0.10;
-            msgBox.innerText = "¡Excelente! Has ganado un 10% de descuento por cantidad. 🎁";
+            msgBox.innerText = "¡Excelente! Se aplicó un 10% de descuento por cantidad.";
             msgBox.classList.remove('hidden');
         } else {
             msgBox.classList.add('hidden');
@@ -92,13 +93,13 @@ function actualizarCalculos() {
     const total = (precioBase * (1 - desc)) * cant;
     document.getElementById('subtotal-valor').innerText = "$" + Math.round(total).toLocaleString('es-CO');
     productoActual.totalF = Math.round(total);
-    productoActual.descuentoAplicado = desc > 0 ? (desc * 100) + "%" : null;
+    productoActual.descLog = desc > 0 ? (desc * 100) + "%" : null;
 }
 
 function agregarAlCarrito() {
     const cant = document.getElementById('cantidad-input').value;
     const op = document.getElementById('opcion-producto').value;
-    carrito.push({ n: productoActual.nombre, o: op, c: cant, t: productoActual.totalF, d: productoActual.descuentoAplicado });
+    carrito.push({ n: productoActual.nombre, o: op, c: cant, t: productoActual.totalF, d: productoActual.descLog });
     document.getElementById('cart-count').innerText = carrito.length;
     alert("¡Añadido al pedido!");
     volverAlCatalogo();
@@ -107,6 +108,7 @@ function agregarAlCarrito() {
 function volverAlCatalogo() {
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
     document.getElementById('catalogo').classList.remove('hidden');
+    window.scrollTo(0,0);
 }
 
 function irAlCarrito() {
@@ -119,7 +121,7 @@ function irAlCarrito() {
         lista.innerHTML += `
             <div style="border-bottom:1px solid #333; padding:10px 0;">
                 <p><strong>${i.n}</strong></p>
-                <p>${i.o} x${i.c}: $${i.t.toLocaleString('es-CO')} ${i.d ? '(Desc. '+i.d+' incl.)' : ''}</p>
+                <p>${i.o} x${i.c}: $${i.t.toLocaleString('es-CO')} ${i.d ? '(Incluye desc. '+i.d+')' : ''}</p>
             </div>`;
         granTotal += i.t;
     });
@@ -131,12 +133,12 @@ function enviarWhatsApp() {
     const ciu = document.getElementById('ciudad-cliente').value;
     if(!nom || !ciu) return alert("Por favor ingresa tu nombre y ciudad.");
     
-    let msg = `*NUEVO PEDIDO - TELAS FÉNIX*%0A*Cliente:* ${nom}%0A*Ciudad:* ${ciu}%0A%0A*DETALLE:*%0A`;
+    let msg = `*PEDIDO - TELAS FÉNIX*%0A*Cliente:* ${nom}%0A*Ciudad:* ${ciu}%0A%0A*DETALLES:*%0A`;
     let totalP = 0;
     carrito.forEach(i => {
-        msg += `- ${i.n} (${i.o}) x${i.c}: $${i.t.toLocaleString('es-CO')}${i.d ? ' (Desc. '+i.d+')' : ''}%0A`;
+        msg += `- ${i.n} (${i.o}) x${i.c}: $${i.t.toLocaleString('es-CO')}${i.d ? ' (Con desc. '+i.d+')' : ''}%0A`;
         totalP += i.t;
     });
-    msg += `%0A*TOTAL FINAL: $${totalP.toLocaleString('es-CO')}*`;
+    msg += `%0A*TOTAL A PAGAR: $${totalP.toLocaleString('es-CO')}*`;
     window.open(`https://api.whatsapp.com/send?phone=573184250115&text=${msg}`);
 }
