@@ -7,18 +7,35 @@ const fotosProductos = {
     'capuchon': ['cap-mixto.jpg']
 };
 
+// --- FUNCIONES DE NAVEGACIÓN ---
+function abrirAyuda() {
+    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+    document.getElementById('seccion-ayuda').classList.remove('hidden');
+}
+
+function cerrarAyuda() {
+    document.getElementById('seccion-ayuda').classList.add('hidden');
+    mostrarCatalogo();
+}
+
 function mostrarCatalogo() {
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
     document.getElementById('catalogo').classList.remove('hidden');
 }
 
+function volverAlCatalogo() {
+    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+    document.getElementById('catalogo').classList.remove('hidden');
+}
+
+// --- FUNCIONES DE PRODUCTO ---
 function verDetalle(tipo) {
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
     document.getElementById('detalle-tecnico').classList.remove('hidden');
     
     const select = document.getElementById('opcion-producto');
     select.innerHTML = "";
-    document.getElementById('personalizacion-texto').value = ""; // Limpiar texto
+    document.getElementById('personalizacion-texto').value = "";
 
     if (tipo === 'fenix') {
         productoActual = { nombre: "Línea Fénix Premium", precio: 95000 };
@@ -45,12 +62,13 @@ function actualizarCalculos() {
     document.getElementById('precio-unitario').innerText = "$" + precio.toLocaleString();
 }
 
+// --- FUNCIONES DE CARRITO ---
 function agregarAlCarrito() {
     const cant = parseInt(document.getElementById('cantidad-input').value);
     const opcion = document.getElementById('opcion-producto').value;
     const color = document.getElementById('color-prenda').value;
     const detalle = document.getElementById('personalizacion-texto').value;
-    const precio = parseInt(document.getElementById('precio-unitario').innerText.replace('$','').replace('.',''));
+    const precio = parseInt(document.getElementById('precio-unitario').innerText.replace('$','').replace('.','').replace('.',''));
     
     carrito.push({ 
         nombre: productoActual.nombre, 
@@ -66,11 +84,6 @@ function agregarAlCarrito() {
     volverAlCatalogo();
 }
 
-function volverAlCatalogo() {
-    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-    document.getElementById('catalogo').classList.remove('hidden');
-}
-
 function irAlCarrito() {
     if(carrito.length === 0) return alert("El carrito está vacío.");
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
@@ -81,11 +94,10 @@ function irAlCarrito() {
     let total = 0;
     carrito.forEach(i => {
         total += i.subtotal;
-        lista.innerHTML += `<div class="item-carrito">
+        lista.innerHTML += `<div style="border-bottom: 1px solid #333; padding: 10px 0;">
             <p><strong>${i.cant}x ${i.nombre}</strong> (${i.opcion})</p>
-            <p>Color: ${i.color} | Detalle: ${i.detalle}</p>
+            <p style="font-size: 0.9rem; color: #ccc;">Color: ${i.color} | Detalle: ${i.detalle}</p>
             <p>Subtotal: $${i.subtotal.toLocaleString()}</p>
-            <hr>
         </div>`;
     });
     document.getElementById('total-precio').innerText = "$" + total.toLocaleString();
@@ -103,7 +115,7 @@ function enviarWhatsApp() {
     const nombre = document.getElementById('nombre-cliente').value;
     if(!nombre) return alert("Por favor, ingresa tu nombre.");
     
-    let msj = `Hola Andrea, soy ${nombre}. Mi pedido de Telas Fénix es:\n\n`;
+    let msj = `Hola Andrea, soy ${nombre}. Mi pedido de Reyand Clothing es:\n\n`;
     carrito.forEach(i => {
         msj += `✅ *${i.cant}x ${i.nombre}*\n`;
         msj += `   - Talla/Mat: ${i.opcion}\n`;
@@ -114,4 +126,3 @@ function enviarWhatsApp() {
     msj += `*TOTAL A PAGAR: ${document.getElementById('total-precio').innerText}*`;
     window.open(`https://wa.me/573184250115?text=${encodeURIComponent(msj)}`);
 }
-// ... (Las demás funciones de ayuda se mantienen igual) ...
