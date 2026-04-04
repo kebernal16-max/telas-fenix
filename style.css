@@ -1,28 +1,25 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root { --rojo: #cc0000; --oscuro: #000; }
 
-body { 
-    font-family: sans-serif; 
-    background-color: var(--oscuro); 
-    color: white; 
-}
-
+body { font-family: sans-serif; background-color: var(--oscuro); color: white; line-height: 1.6; }
 .hidden { display: none !important; }
 
-.bienvenida-contenido {
-    text-align: center;
-    padding: 50px 20px;
-    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('ave-fenix.jpg');
-    background-size: cover;
-    min-height: 100vh;
-}
+.bienvenida-contenido { text-align: center; padding: 60px 20px; background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('ave-fenix.jpg') center/cover; min-height: 100vh; }
+.btn-rojo { background: var(--rojo); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
+.btn-ayuda { background: transparent; color: white; border: 1px solid white; padding: 15px; border-radius: 8px; margin-top: 10px; cursor: pointer; width: 100%; }
 
-.btn-rojo { background: var(--rojo); color: white; border: none; padding: 15px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-.btn-ayuda { background: transparent; color: white; border: 1px solid white; padding: 15px; border-radius: 5px; margin-top: 10px; cursor: pointer; }
+/* ESTILO AYUDA */
+#seccion-ayuda { padding: 30px 20px; background: #0a0a0a; min-height: 100vh; }
+.paso-ayuda { background: #1a1a1a; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid var(--rojo); display: flex; gap: 15px; }
+.paso-ayuda span { font-size: 1.5rem; }
+.paso-ayuda strong { color: #ffcc00; display: block; }
 
 .contenedor-productos { padding: 20px; display: grid; gap: 20px; }
-.producto-card { background: #111; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #333; }
-.producto-card img { width: 100%; border-radius: 5px; }
+.producto-card { background: #111; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #333; }
+.producto-card img { width: 100%; border-radius: 8px; }
 
-#cart-icon { position: fixed; top: 10px; right: 10px; background: var(--rojo); padding: 10px; border-radius: 50%; z-index: 100; cursor: pointer; }
-#detalle-tecnico img { width: 100%; max-width: 500px; display: block; margin: 0 auto; }
+.miniaturas-flex { display: flex; gap: 10px; margin-top: 10px; overflow-x: auto; padding-bottom: 10px; }
+.miniatura { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent; }
+.miniatura.active { border-color: var(--rojo); }
+
+#imagen-principal { width: 100%; max-width: 500px; border-radius: 10px; display: block; margin: 0 auto; }
