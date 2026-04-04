@@ -1,10 +1,10 @@
 let carrito = [];
 let productoActual = {};
 
-// CONFIGURACIÓN DE FOTOS
+// CONFIGURACIÓN DE FOTOS: Aquí agregas los nombres exactos que subiste
 const fotosProductos = {
     'fenix': ['fenix1.jpg', 'fenix2.jpg', 'fenix3.jpg'], 
-    'estandar': ['estandar1.jpg', 'estandar2.jpg'],
+    'estandar': ['estandar1.jpg', 'estandar2.jpg', 'estandar3.jpg'],
     'capuchon': ['cap-mixto.jpg', 'cap-drill.jpg']
 };
 
