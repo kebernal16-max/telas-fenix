@@ -26,33 +26,22 @@
     <section id="seccion-ayuda" class="hidden">
         <div class="contenido-ayuda">
             <h2>¿Cómo comprar en Telas Fénix?</h2>
-            
             <div class="paso-ayuda">
                 <span>👕</span>
                 <div>
                     <strong>Prendas Personalizadas:</strong>
-                    <p>Manejamos chaquetas en Jean o Drill totalmente a tu gusto.</p>
+                    <p>Chaquetas en Jean o Drill a tu gusto.</p>
                 </div>
             </div>
-
             <div class="paso-ayuda">
                 <span>🪡</span>
                 <div>
-                    <strong>Calidad Garantizada:</strong>
-                    <p>• Línea Premium ($95.000): 3 costuras y 4 broches.</p>
-                    <p>• Línea Estándar ($85.000): 2 costuras y 1 broche.</p>
+                    <strong>Calidad:</strong>
+                    <p>• Premium ($95.000): 3 costuras / 4 broches.</p>
+                    <p>• Estándar ($85.000): 2 costuras / 1 broche.</p>
                 </div>
             </div>
-
-            <div class="paso-ayuda">
-                <span>📲</span>
-                <div>
-                    <strong>Pedido Directo:</strong>
-                    <p>Tu pedido se enviará directamente al WhatsApp de la encargada.</p>
-                </div>
-            </div>
-
-            <button class="btn-rojo" onclick="cerrarAyuda()">¡ENTENDIDO, IR AL CATÁLOGO!</button>
+            <button class="btn-rojo" onclick="cerrarAyuda()">¡ENTENDIDO!</button>
         </div>
     </section>
 
@@ -63,19 +52,19 @@
                 <img src="fenix1.jpg" alt="Fénix Premium">
                 <h3>Línea Fénix Premium</h3>
                 <p>Desde $95.000</p>
-                <button class="btn-ver">Ver Características</button>
+                <button class="btn-ver">Ver Detalles</button>
             </div>
             <div class="producto-card" onclick="verDetalle('estandar')">
                 <img src="estandar1.jpg" alt="Estándar">
                 <h3>Línea Estándar</h3>
                 <p>Desde $85.000</p>
-                <button class="btn-ver">Ver Características</button>
+                <button class="btn-ver">Ver Detalles</button>
             </div>
             <div class="producto-card" onclick="verDetalle('capuchon')">
                 <img src="cap-mixto.jpg" alt="Capuchones">
                 <h3>Capuchones Industriales</h3>
                 <p>Desde $12.000</p>
-                <button class="btn-ver">Ver Características</button>
+                <button class="btn-ver">Ver Detalles</button>
             </div>
         </div>
     </section>
@@ -83,23 +72,16 @@
     <section id="detalle-tecnico" class="hidden">
         <button class="btn-volver" onclick="volverAlCatalogo()">← Volver</button>
         <div class="detalle-grid">
-            <div class="detalle-galeria">
-                <img id="imagen-principal" src="" alt="Producto">
-                <div id="miniaturas-contenedor" class="miniaturas-flex"></div>
-            </div>
+            <img id="imagen-principal" src="" alt="Producto">
             <div class="configurador">
                 <h2 id="detalle-titulo"></h2>
-                <div class="info-precios">
-                    <p>Precio Unitario: <span id="precio-unitario"></span></p>
-                    <p>Subtotal: <strong id="subtotal-valor">$0</strong></p>
-                </div>
+                <p>Precio: <span id="precio-unitario"></span></p>
                 <div id="contenedor-info-tecnica"></div>
-                <div id="mensaje-descuento" class="cuadro-descuento hidden"></div>
-                
                 <label>Talla o Material:</label>
                 <select id="opcion-producto" onchange="actualizarCalculos()"></select>
                 <label>Cantidad:</label>
                 <input type="number" id="cantidad-input" value="1" min="1" oninput="actualizarCalculos()">
+                <p>Subtotal: <strong id="subtotal-valor">$0</strong></p>
                 <button class="btn-rojo" onclick="agregarAlCarrito()">AÑADIR AL PEDIDO 🛒</button>
             </div>
         </div>
@@ -108,12 +90,9 @@
     <section id="carrito-seccion" class="hidden">
         <h2>RESUMEN DE TU PEDIDO</h2>
         <div id="lista-carrito"></div>
-        <div class="totales-finales">
-            <h3>TOTAL: <span id="total-precio">$0</span></h3>
-        </div>
+        <h3>TOTAL: <span id="total-precio">$0</span></h3>
         <div class="formulario-cliente">
-            <input type="text" id="nombre-cliente" placeholder="Tu Nombre Completo">
-            <input type="text" id="ciudad-cliente" placeholder="Ciudad o Localidad">
+            <input type="text" id="nombre-cliente" placeholder="Tu Nombre">
             <button class="btn-whatsapp" onclick="enviarWhatsApp()">PEDIR POR WHATSAPP ✅</button>
         </div>
     </section>
