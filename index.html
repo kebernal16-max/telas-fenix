@@ -26,22 +26,42 @@
     <section id="seccion-ayuda" class="hidden">
         <div class="contenido-ayuda">
             <h2>¿Cómo comprar en Telas Fénix?</h2>
+            
             <div class="paso-ayuda">
                 <span>👕</span>
                 <div>
                     <strong>Prendas Personalizadas:</strong>
-                    <p>Chaquetas en Jean o Drill a tu gusto.</p>
+                    <p>Manejamos chaquetas en <strong>Jean o Drill</strong> (o combinadas) totalmente a tu gusto en colores y diseño.</p>
                 </div>
             </div>
+
             <div class="paso-ayuda">
                 <span>🪡</span>
                 <div>
-                    <strong>Calidad:</strong>
-                    <p>• Premium ($95.000): 3 costuras / 4 broches.</p>
-                    <p>• Estándar ($85.000): 2 costuras / 1 broche.</p>
+                    <strong>Calidad Garantizada:</strong>
+                    <p>• <strong>Línea Premium ($95.000):</strong> 3 costuras y 4 broches en el puño para máxima resistencia.</p>
+                    <p>• <strong>Línea Estándar ($85.000):</strong> 2 costuras y 1 broche.</p>
+                    <p>• Todas incluyen <strong>BORDADO</strong> de Nombre, RH y Bandera a tu elección.</p>
                 </div>
             </div>
-            <button class="btn-rojo" onclick="cerrarAyuda()">¡ENTENDIDO!</button>
+
+            <div class="paso-ayuda">
+                <span>👷</span>
+                <div>
+                    <strong>Capuchones Industriales:</strong>
+                    <p>• Material Drill: $16.000 | Dacrón: $12.000 | Mixtos: $14.000.</p>
+                </div>
+            </div>
+
+            <div class="paso-ayuda">
+                <span>🎁</span>
+                <div>
+                    <strong>Beneficios Mayoreo:</strong>
+                    <p>Por compras al por mayor, el sistema otorgará un descuento automáticamente al armar tu pedido.</p>
+                </div>
+            </div>
+
+            <button class="btn-rojo" onclick="cerrarAyuda()">¡ENTENDIDO, IR AL CATÁLOGO!</button>
         </div>
     </section>
 
@@ -72,15 +92,18 @@
     <section id="detalle-tecnico" class="hidden">
         <button class="btn-volver" onclick="volverAlCatalogo()">← Volver</button>
         <div class="detalle-grid">
-            <img id="imagen-principal" src="" alt="Producto">
+            <div class="detalle-galeria">
+                <img id="imagen-principal" src="" alt="Producto">
+                <div id="miniaturas-contenedor" class="miniaturas-flex"></div>
+            </div>
             <div class="configurador">
                 <h2 id="detalle-titulo"></h2>
-                <p>Precio: <span id="precio-unitario"></span></p>
                 <div id="contenedor-info-tecnica"></div>
                 <label>Talla o Material:</label>
                 <select id="opcion-producto" onchange="actualizarCalculos()"></select>
                 <label>Cantidad:</label>
                 <input type="number" id="cantidad-input" value="1" min="1" oninput="actualizarCalculos()">
+                <p>Precio: <span id="precio-unitario"></span></p>
                 <p>Subtotal: <strong id="subtotal-valor">$0</strong></p>
                 <button class="btn-rojo" onclick="agregarAlCarrito()">AÑADIR AL PEDIDO 🛒</button>
             </div>
@@ -92,7 +115,7 @@
         <div id="lista-carrito"></div>
         <h3>TOTAL: <span id="total-precio">$0</span></h3>
         <div class="formulario-cliente">
-            <input type="text" id="nombre-cliente" placeholder="Tu Nombre">
+            <input type="text" id="nombre-cliente" placeholder="Tu Nombre Completo">
             <button class="btn-whatsapp" onclick="enviarWhatsApp()">PEDIR POR WHATSAPP ✅</button>
         </div>
     </section>
