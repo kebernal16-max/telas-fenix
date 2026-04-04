@@ -16,7 +16,6 @@
         <div class="bienvenida-contenido">
             <p>Hola, te habla <strong>Andrea Villalba</strong></p>
             <h1>ESTA ES MI GRAN EMPRESA TEXTIL</h1>
-            <p>Agenda tu pedido y con gusto te atenderemos.</p>
             <button class="btn-rojo" onclick="mostrarCatalogo()">ENTRAR AL CATÁLOGO</button>
         </div>
     </section>
@@ -25,13 +24,13 @@
         <h2 class="titulo-seccion">EJEMPLOS DE NUESTRAS PRENDAS</h2>
         <div class="contenedor-productos">
             <div class="producto-card" onclick="verDetalle('fenix')">
-                <img src="fenix1.jpg" alt="Línea Fénix">
+                <img src="fenix1.jpg" alt="Fénix Premium">
                 <h3>Línea Fénix Premium</h3>
                 <p>Desde $95.000</p>
                 <button class="btn-ver">Ver Características</button>
             </div>
             <div class="producto-card" onclick="verDetalle('estandar')">
-                <img src="estandar1.jpg" alt="Línea Estándar">
+                <img src="estandar1.jpg" alt="Estándar">
                 <h3>Línea Estándar</h3>
                 <p>Desde $85.000</p>
                 <button class="btn-ver">Ver Características</button>
@@ -48,8 +47,9 @@
     <section id="detalle-tecnico" class="hidden">
         <button class="btn-volver" onclick="volverAlCatalogo()">← Volver</button>
         <div class="detalle-grid">
-            <div class="detalle-img">
+            <div class="detalle-galeria">
                 <img id="imagen-principal" src="" alt="Producto">
+                <div id="miniaturas-contenedor" class="miniaturas-flex"></div>
             </div>
             <div class="configurador">
                 <h2 id="detalle-titulo"></h2>
@@ -76,7 +76,6 @@
             <input type="text" id="nombre-cliente" placeholder="Tu Nombre Completo">
             <input type="text" id="ciudad-cliente" placeholder="Ciudad o Localidad">
             <button class="btn-whatsapp" onclick="enviarWhatsApp()">PEDIR POR WHATSAPP ✅</button>
-            <button class="btn-volver" onclick="volverAlCatalogo()">Seguir Comprando</button>
         </div>
     </section>
 
