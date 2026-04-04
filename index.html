@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telas Fénix | Empresa Textil</title>
+    <title>Telas Fénix - Catálogo</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,10 +14,9 @@
 
     <section id="bienvenida">
         <div class="bienvenida-contenido">
-            <p class="saludo-personal">Hola, te habla <b>Andrea Villalba</b></p>
-            <h1>ESTA ES MI GRAN <br><span>EMPRESA TEXTIL</span></h1>
-            <p class="sub-saludo">Agenda tu pedido y con gusto te atenderemos.</p>
-            <button onclick="mostrarCatalogo()" class="btn-rojo">ENTRAR AL CATÁLOGO</button>
+            <p>Hola, te habla <strong>Andrea Villalba</strong></p>
+            <h1>ESTA ES MI GRAN EMPRESA TEXTIL</h1>
+            <button class="btn-rojo" onclick="mostrarCatalogo()">ENTRAR AL CATÁLOGO</button>
         </div>
     </section>
 
@@ -25,103 +24,61 @@
         <h2 class="titulo-seccion">EJEMPLOS DE NUESTRAS PRENDAS</h2>
         <div class="contenedor-productos">
             <div class="producto-card" onclick="verDetalle('fenix')">
-                <img src="fenix1.jpg" alt="Línea Fénix">
+                <img src="fenix1.jpg" alt="Fénix Premium">
                 <h3>Línea Fénix Premium</h3>
-                <p class="precio-tag">Desde $95.000</p>
-                <button class="btn-mini">Ver Características</button>
+                <p>Desde $95.000</p>
+                <button class="btn-ver">Ver Características</button>
             </div>
             <div class="producto-card" onclick="verDetalle('estandar')">
-                <img src="estandar1.jpg" alt="Línea Estándar">
+                <img src="estandar1.jpg" alt="Estándar">
                 <h3>Línea Estándar</h3>
-                <p class="precio-tag">Desde $85.000</p>
-                <button class="btn-mini">Ver Características</button>
+                <p>Desde $85.000</p>
+                <button class="btn-ver">Ver Características</button>
             </div>
             <div class="producto-card" onclick="verDetalle('capuchon')">
                 <img src="cap-mixto.jpg" alt="Capuchones">
                 <h3>Capuchones Industriales</h3>
-                <p class="precio-tag">Desde $12.000</p>
-                <button class="btn-mini">Ver Características</button>
+                <p>Desde $12.000</p>
+                <button class="btn-ver">Ver Características</button>
             </div>
         </div>
     </section>
 
     <section id="detalle-tecnico" class="hidden">
-        <div class="contenido-detalle">
-            <button onclick="volverAlCatalogo()" class="btn-volver">← Volver al Catálogo</button>
-            
-            <div class="detalle-grid">
-                <div class="galeria-interactiva">
-                    <img id="imagen-principal" src="" alt="Producto">
-                    <div id="miniaturas" class="miniaturas-container"></div>
-                    
-                    <div class="bloque-calidad">
-                        <h4>🧵 CALIDAD GARANTIZADA:</h4>
-                        <p>• Material 100% grueso en <b>Drill o Jean</b>.<br>
-                        • Colores combinables al gusto del cliente.</p>
-                    </div>
-
-                    <div class="tabla-descuentos" id="tabla-ahorro">
-                        <h4>🎁 DESCUENTOS POR CANTIDAD:</h4>
-                        <p>6 - 11 unidades: <b>5% de descuento</b></p>
-                        <p>12+ unidades: <b>10% de descuento</b></p>
-                    </div>
+        <button class="btn-volver" onclick="volverAlCatalogo()">← Volver</button>
+        <div class="detalle-grid">
+            <div class="detalle-galeria">
+                <img id="imagen-principal" src="" alt="Producto">
+                <div id="miniaturas-contenedor" class="miniaturas-flex"></div>
+            </div>
+            <div class="configurador">
+                <h2 id="detalle-titulo"></h2>
+                <div class="info-precios">
+                    <p>Precio Unitario: <span id="precio-unitario"></span></p>
+                    <p>Subtotal: <strong id="subtotal-valor">$0</strong></p>
                 </div>
-
-                <div class="configurador">
-                    <h2 id="detalle-titulo"></h2>
-                    <p id="detalle-precio" class="precio-destacado"></p>
-                    
-                    <div class="bloque-personalizacion" id="bloque-bordados">
-                        <h4>✨ PERSONALIZACIÓN INCLUIDA:</h4>
-                        <p>Todo va <b>BORDADO</b> e incluye:<br>
-                        • Grupo Sanguíneo (RH)<br>
-                        • Nombre y un Apellido<br>
-                        • Bandera del país que elijas</p>
-                    </div>
-
-                    <div class="ficha-tecnica">
-                        <h4>ESPECIFICACIONES TÉCNICAS:</h4>
-                        <ul id="lista-especificaciones"></ul>
-                    </div>
-
-                    <div class="controles">
-                        <label>Talla o Material:</label>
-                        <select id="opcion-producto" onchange="actualizarCalculos()"></select>
-                        
-                        <label>Cantidad:</label>
-                        <input type="number" id="cantidad-input" value="1" min="1" oninput="actualizarCalculos()">
-                        
-                        <div class="subtotal-dinamico">
-                            <span>SUBTOTAL:</span>
-                            <span id="subtotal-valor">$0</span>
-                        </div>
-                        <p id="aviso-descuento" style="color: #00ff00; font-weight: bold; margin-bottom: 15px;"></p>
-
-                        <button onclick="agregarAlCarrito()" class="btn-rojo">AÑADIR AL PEDIDO 🛒</button>
-                    </div>
-                </div>
+                <div id="contenedor-info-tecnica"></div>
+                <div id="mensaje-descuento" class="cuadro-descuento hidden"></div>
+                
+                <label>Talla o Material:</label>
+                <select id="opcion-producto" onchange="actualizarCalculos()"></select>
+                <label>Cantidad:</label>
+                <input type="number" id="cantidad-input" value="1" min="1" oninput="actualizarCalculos()">
+                <button class="btn-rojo" onclick="agregarAlCarrito()">AÑADIR AL PEDIDO 🛒</button>
             </div>
         </div>
     </section>
 
     <section id="carrito-seccion" class="hidden">
-        <div class="contenido-detalle">
-            <h2 class="titulo-seccion">RESUMEN DE TU PEDIDO</h2>
-            <div id="lista-carrito"></div>
-            
-            <div class="formulario-cliente">
-                <h4>DATOS PARA EL ENVÍO:</h4>
-                <input type="text" id="nombre-cliente" placeholder="Tu Nombre Completo">
-                <input type="text" id="ubicacion-cliente" placeholder="Ciudad o Localidad">
-            </div>
-
-            <div class="resumen-final">
-                <h3>TOTAL A PAGAR: <span id="total-precio">$0</span></h3>
-                <div class="botones-finales">
-                    <button onclick="volverAlCatalogo()" class="btn-volver">Seguir Comprando</button>
-                    <button onclick="enviarWhatsApp()" class="btn-rojo">PEDIR POR WHATSAPP ✅</button>
-                </div>
-            </div>
+        <h2>RESUMEN DE TU PEDIDO</h2>
+        <div id="lista-carrito"></div>
+        <div class="totales-finales">
+            <h3>TOTAL: <span id="total-precio">$0</span></h3>
+        </div>
+        <div class="formulario-cliente">
+            <input type="text" id="nombre-cliente" placeholder="Tu Nombre Completo">
+            <input type="text" id="ciudad-cliente" placeholder="Ciudad o Localidad">
+            <button class="btn-whatsapp" onclick="enviarWhatsApp()">PEDIR POR WHATSAPP ✅</button>
         </div>
     </section>
 
