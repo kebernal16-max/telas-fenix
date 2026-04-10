@@ -9,16 +9,12 @@ const fotosProductos = {
 };
 
 window.onload = function() {
-    const carritoGuardado = localStorage.getItem('carritoReyand');
-    if (carritoGuardado) {
-        carrito = JSON.parse(carritoGuardado);
-        actualizarContador();
+    const guardado = localStorage.getItem('carritoReyand');
+    if (guardado) {
+        carrito = JSON.parse(guardado);
+        document.getElementById('cart-count').innerText = carrito.length;
     }
 };
-
-function actualizarContador() {
-    document.getElementById('cart-count').innerText = carrito.length;
-}
 
 function abrirAyuda() {
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
@@ -65,15 +61,14 @@ function verDetalle(tipo) {
         productoActual = { nombre: "Línea Estándar", precio: 85000 };
         ['S', 'M', 'L', 'XL'].forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
     } else if (tipo === 'capuchon') {
-        productoActual = { nombre: "Capuchón Industrial", precio: 12000 };
+        productoActual = { nombre: "Capuchón", precio: 12000 };
         select.innerHTML = `<option value="Dacron" data-p="12000">Dacrón ($12.000)</option>
                             <option value="Mixto" data-p="14000">Mixto ($14.000)</option>
                             <option value="Drill" data-p="16000">Drill ($16.000)</option>`;
     } else if (tipo === 'personalizado') {
-        productoActual = { nombre: "Trabajo Personalizado", precio: 0 };
+        productoActual = { nombre: "Personalizado", precio: 0 };
         select.innerHTML = `<option value="Diseño Especial" data-p="0">Cotizar por WhatsApp</option>`;
     }
-
     document.getElementById('detalle-titulo').innerText = productoActual.nombre;
     actualizarCalculos();
 }
@@ -83,7 +78,6 @@ function actualizarCalculos() {
     let precio = productoActual.precio;
     const sel = document.getElementById('opcion-producto');
     if(sel.selectedOptions[0]?.dataset.p) precio = parseInt(sel.selectedOptions[0].dataset.p);
-    
     document.getElementById('precio-unitario').innerText = precio === 0 ? "A convenir" : "$" + precio.toLocaleString();
     document.getElementById('subtotal-valor').innerText = "$" + (precio * cant).toLocaleString();
 }
@@ -94,21 +88,20 @@ function agregarAlCarrito() {
     const color = document.getElementById('color-prenda').value;
     const detalle = document.getElementById('personalizacion-texto').value;
     const subtotalText = document.getElementById('subtotal-valor').innerText.replace('$','').split('.').join('');
-    const subtotal = parseInt(subtotalText);
-
-    carrito.push({ nombre: productoActual.nombre, opcion, color, detalle: detalle || "Sin detalles", cant, subtotal });
-    actualizarContador();
+    
+    carrito.push({ nombre: productoActual.nombre, opcion, color, detalle: detalle || "Sin detalles", cant, subtotal: parseInt(subtotalText) });
+    document.getElementById('cart-count').innerText = carrito.length;
     localStorage.setItem('carritoReyand', JSON.stringify(carrito));
-
+    
     const toast = document.createElement('div');
-    toast.innerText = "✅ Añadido al pedido";
+    toast.innerText = "✅ Añadido";
     toast.className = "toast-notificacion";
     document.body.appendChild(toast);
     setTimeout(() => { toast.remove(); volverAlCatalogo(); }, 1200);
 }
 
 function irAlCarrito() {
-    if(carrito.length === 0) return alert("El carrito está vacío.");
+    if(carrito.length === 0) return alert("Carrito vacío");
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
     document.getElementById('carrito-seccion').classList.remove('hidden');
     const lista = document.getElementById('lista-carrito');
@@ -127,16 +120,15 @@ function irAlCarrito() {
 
 function eliminarDelCarrito(idx) {
     carrito.splice(idx, 1);
-    actualizarContador();
+    document.getElementById('cart-count').innerText = carrito.length;
     localStorage.setItem('carritoReyand', JSON.stringify(carrito));
     if(carrito.length === 0) volverAlCatalogo(); else irAlCarrito();
 }
 
 function vaciarCarrito() {
-    if(confirm("¿Borrar todo?")) {
-        carrito = []; localStorage.removeItem('carritoReyand');
-        actualizarContador(); volverAlCatalogo();
-    }
+    carrito = []; localStorage.removeItem('carritoReyand');
+    document.getElementById('cart-count').innerText = "0";
+    volverAlCatalogo();
 }
 
 function enviarWhatsApp() {
