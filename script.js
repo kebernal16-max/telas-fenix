@@ -8,13 +8,24 @@ const fotosProductos = {
     'personalizado': ['personalizados1.jpg', 'personalizados2.jpg', 'personalizados3.jpg']
 };
 
-window.onload = () => {
-    const guardado = localStorage.getItem('carritoReyand');
-    if (guardado) {
-        carrito = JSON.parse(guardado);
-        document.getElementById('cart-count').innerText = carrito.length;
+window.onload = function() {
+    const carritoGuardado = localStorage.getItem('carritoReyand');
+    if (carritoGuardado) {
+        carrito = JSON.parse(carritoGuardado);
+        actualizarContador();
     }
 };
+
+function actualizarContador() {
+    document.getElementById('cart-count').innerText = carrito.length;
+}
+
+function abrirAyuda() {
+    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+    document.getElementById('seccion-ayuda').classList.remove('hidden');
+}
+
+function cerrarAyuda() { mostrarCatalogo(); }
 
 function mostrarCatalogo() {
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
@@ -22,11 +33,6 @@ function mostrarCatalogo() {
 }
 
 function volverAlCatalogo() { mostrarCatalogo(); }
-function abrirAyuda() {
-    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-    document.getElementById('seccion-ayuda').classList.remove('hidden');
-}
-function cerrarAyuda() { mostrarCatalogo(); }
 
 function verDetalle(tipo) {
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
@@ -59,7 +65,7 @@ function verDetalle(tipo) {
         productoActual = { nombre: "Línea Estándar", precio: 85000 };
         ['S', 'M', 'L', 'XL'].forEach(t => select.innerHTML += `<option value="${t}">${t}</option>`);
     } else if (tipo === 'capuchon') {
-        productoActual = { nombre: "Capuchón", precio: 12000 };
+        productoActual = { nombre: "Capuchón Industrial", precio: 12000 };
         select.innerHTML = `<option value="Dacron" data-p="12000">Dacrón ($12.000)</option>
                             <option value="Mixto" data-p="14000">Mixto ($14.000)</option>
                             <option value="Drill" data-p="16000">Drill ($16.000)</option>`;
@@ -87,21 +93,22 @@ function agregarAlCarrito() {
     const opcion = document.getElementById('opcion-producto').value;
     const color = document.getElementById('color-prenda').value;
     const detalle = document.getElementById('personalizacion-texto').value;
-    const precio = parseInt(document.getElementById('subtotal-valor').innerText.replace('$','').split('.').join('')) / cant;
+    const subtotalText = document.getElementById('subtotal-valor').innerText.replace('$','').split('.').join('');
+    const subtotal = parseInt(subtotalText);
 
-    carrito.push({ nombre: productoActual.nombre, opcion, color, detalle: detalle || "Sin detalles", cant, subtotal: precio * cant });
-    document.getElementById('cart-count').innerText = carrito.length;
+    carrito.push({ nombre: productoActual.nombre, opcion, color, detalle: detalle || "Sin detalles", cant, subtotal });
+    actualizarContador();
     localStorage.setItem('carritoReyand', JSON.stringify(carrito));
 
     const toast = document.createElement('div');
-    toast.innerText = "✅ Añadido";
+    toast.innerText = "✅ Añadido al pedido";
     toast.className = "toast-notificacion";
     document.body.appendChild(toast);
     setTimeout(() => { toast.remove(); volverAlCatalogo(); }, 1200);
 }
 
 function irAlCarrito() {
-    if(carrito.length === 0) return alert("Carrito vacío");
+    if(carrito.length === 0) return alert("El carrito está vacío.");
     document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
     document.getElementById('carrito-seccion').classList.remove('hidden');
     const lista = document.getElementById('lista-carrito');
@@ -120,23 +127,24 @@ function irAlCarrito() {
 
 function eliminarDelCarrito(idx) {
     carrito.splice(idx, 1);
-    document.getElementById('cart-count').innerText = carrito.length;
+    actualizarContador();
     localStorage.setItem('carritoReyand', JSON.stringify(carrito));
     if(carrito.length === 0) volverAlCatalogo(); else irAlCarrito();
 }
 
 function vaciarCarrito() {
-    carrito = []; localStorage.removeItem('carritoReyand');
-    document.getElementById('cart-count').innerText = "0";
-    volverAlCatalogo();
+    if(confirm("¿Borrar todo?")) {
+        carrito = []; localStorage.removeItem('carritoReyand');
+        actualizarContador(); volverAlCatalogo();
+    }
 }
 
 function enviarWhatsApp() {
     const nombre = document.getElementById('nombre-cliente').value;
-    if(!nombre) return alert("Escribe tu nombre");
+    if(!nombre) return alert("Ingresa tu nombre");
     let msj = `Hola Andrea, soy ${nombre}. Pedido Reyand:\n\n`;
     carrito.forEach(i => {
-        msj += `✅ *${i.cant}x ${i.nombre}*\n- Talla/Mat: ${i.opcion}\n- Color: ${i.color}\n- Detalle: ${i.detalle}\n- Subtotal: $${i.subtotal.toLocaleString()}\n\n`;
+        msj += `✅ *${i.cant}x ${i.nombre}*\n- Talla/Mat: ${i.opcion}\n- Color: ${i.color}\n- Detalle: ${i.detalle}\n- Valor: $${i.subtotal.toLocaleString()}\n\n`;
     });
     msj += `*TOTAL: ${document.getElementById('total-precio').innerText}*`;
     window.open(`https://wa.me/573184250115?text=${encodeURIComponent(msj)}`);
