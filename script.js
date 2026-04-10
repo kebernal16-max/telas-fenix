@@ -1,7 +1,6 @@
 let carrito = [];
 let productoActual = {};
 
-// Generación automática de listas de imágenes
 const fotosFenix = [];
 for (let i = 1; i <= 62; i++) { fotosFenix.push(`fenix${i}.jpg`); }
 
