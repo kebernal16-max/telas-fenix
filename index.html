@@ -30,21 +30,42 @@
 
     <section id="seccion-ayuda" class="hidden">
         <div style="padding: 20px; max-width: 600px; margin: 0 auto; color: white;">
-            <h2 style="text-align: center; margin-bottom: 20px; color: #ffcc00;">¿Cómo comprar?</h2>
-            <div style="background: #1a1a1a; padding: 20px; border-radius: 12px; border-left: 5px solid #cc0000;">
-                <p>Manejamos chaquetas personalizadas en <strong>Jean o Drill</strong>.</p>
-                <p>• <strong>Línea Premium ($95.000):</strong> 3 costuras, 4 broches.</p>
-                <p>• <strong>Línea Estándar ($85.000):</strong> 2 costuras, 1 broche.</p>
+            <h2 style="text-align: center; margin-bottom: 20px; color: #ffcc00;">¿Cómo comprar en Reyand Clothing?</h2>
+            
+            <div style="background: #1a1a1a; padding: 20px; border-radius: 12px; border-left: 5px solid #cc0000; margin-bottom: 20px;">
+                <h3 style="margin-bottom: 10px; color: #ffcc00;">👕 Nuestras Prendas</h3>
+                <p>Manejamos chaquetas de alta resistencia en <strong>Jean o Drill</strong>, diseñadas para durar.</p>
+                
+                <h3 style="margin: 20px 0 10px 0; border-top: 1px solid #333; padding-top: 10px; color: #ffcc00;">🧵 Calidad y Confección</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 15px;">
+                        <strong style="color: #ffcc00;">✨ Línea Fénix Premium ($95.000):</strong><br>
+                        • Confección reforzada a <strong>3 costuras</strong>.<br>
+                        • Puños ajustables con <strong>4 broches</strong> de presión.<br>
+                        • Ideal para uso rudo y máxima durabilidad.
+                    </li>
+                    <li style="margin-bottom: 15px;">
+                        <strong style="color: #ffcc00;">✅ Línea Estándar ($85.000):</strong><br>
+                        • Confección de calidad a <strong>2 costuras</strong>.<br>
+                        • Puños sencillos con <strong>1 broche</strong>.<br>
+                        • Excelente balance entre precio y resistencia.
+                    </li>
+                </ul>
+
+                <h3 style="margin: 20px 0 10px 0; border-top: 1px solid #333; padding-top: 10px; color: #ffcc00;">🎨 Personalización</h3>
+                <p>Puedes agregar tu <strong>nombre, RH, banderas o logos</strong>. El precio de los bordados adicionales se acuerda por WhatsApp según el diseño.</p>
             </div>
-            <button class="btn-rojo" onclick="cerrarAyuda()" style="margin-top: 20px;">¡ENTENDIDO!</button>
+            
+            <button class="btn-rojo" onclick="cerrarAyuda()">¡ENTENDIDO, QUIERO COMPRAR!</button>
         </div>
     </section>
 
     <section id="catalogo" class="hidden">
         <h2 style="text-align: center; margin: 20px 0;">NUESTRAS PRENDAS</h2>
+        <p class="aviso-fotos">⚠️ *Haz clic para ver el catálogo de fotos completo.*</p>
         <div class="contenedor-productos">
             <div class="producto-card" onclick="verDetalle('fenix')">
-                <img src="fenix1.jpg" alt="Fénix Premium">
+                <img src="fenix1.jpg" alt="Fénix">
                 <h3>Línea Fénix Premium</h3>
                 <p>Desde $95.000</p>
                 <button class="btn-rojo">VER CATÁLOGO COMPLETO</button>
@@ -71,20 +92,20 @@
     </section>
 
     <section id="detalle-tecnico" class="hidden">
-        <button onclick="volverAlCatalogo()" style="background:none; color:white; border:none; padding:15px; cursor:pointer;">← Volver</button>
+        <button onclick="volverAlCatalogo()" style="background:none; color:white; border:none; padding:15px; cursor:pointer; font-size: 1.1rem;">← Volver al catálogo</button>
         <div class="detalle-grid" style="padding: 0 20px;">
             <img id="imagen-principal" src="" alt="Producto" style="width:100%; border-radius:10px;">
             <div id="miniaturas-contenedor" class="miniaturas-flex"></div>
             
-            <h2 id="detalle-titulo"></h2>
+            <h2 id="detalle-titulo" style="margin-top: 15px;"></h2>
             
-            <label>Color:</label>
+            <label>Color de la prenda:</label>
             <select id="color-prenda">
                 <option value="Negro">Negro</option>
                 <option value="Azul Oscuro">Azul Oscuro</option>
                 <option value="Verde Militar">Verde Militar</option>
                 <option value="Gris">Gris</option>
-                <option value="Otro">Otro</option>
+                <option value="Otro">Otro (especificar abajo)</option>
             </select>
 
             <label>Talla o Material:</label>
@@ -93,30 +114,35 @@
             <label>Cantidad:</label>
             <input type="number" id="cantidad-input" value="1" min="1" oninput="actualizarCalculos()">
 
-            <label>Detalles (Nombres, RH, Logos):</label>
-            <textarea id="personalizacion-texto" placeholder="Escribe aquí los detalles..."></textarea>
+            <label>Detalles extras (Bordados, nombres, RH):</label>
+            <textarea id="personalizacion-texto" placeholder="Ej: Bandera en brazo, nombre en pecho..."></textarea>
 
-            <p>Precio: <span id="precio-unitario"></span></p>
+            <p>Precio Unitario: <span id="precio-unitario"></span></p>
             <p>Subtotal: <strong id="subtotal-valor">$0</strong></p>
             <button class="btn-rojo" onclick="agregarAlCarrito()">AÑADIR AL PEDIDO 🛒</button>
         </div>
     </section>
 
     <section id="carrito-seccion" class="hidden">
-        <h2 style="text-align: center; margin: 20px 0;">TU PEDIDO</h2>
+        <h2 style="text-align: center; margin: 20px 0;">RESUMEN DEL PEDIDO</h2>
         <div id="lista-carrito"></div>
-        <h3 style="text-align: center; margin-top: 10px;">TOTAL: <span id="total-precio">$0</span></h3>
+        <div class="botones-carrito-acciones">
+            <button class="btn-blanco" onclick="volverAlCatalogo()">+ SEGUIR COMPRANDO</button>
+            <button class="btn-gris" onclick="vaciarCarrito()">🗑️ VACIAR</button>
+        </div>
+        <h3 style="text-align: center;">TOTAL: <span id="total-precio">$0</span></h3>
         <div class="pago-panel">
+            <p>Medios de pago:</p>
             <div class="logos-pago">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Nequi_Logo.png/640px-Nequi_Logo.png" alt="Nequi">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Daviplata_logo.png" alt="Daviplata">
+                <span>Efectivo</span>
             </div>
             <p class="pago-nota">La información de pago se brinda por WhatsApp.</p>
         </div>
         <div style="padding: 20px;">
-            <input type="text" id="nombre-cliente" placeholder="Tu nombre completo">
-            <button class="btn-rojo" style="background: #25D366;" onclick="enviarWhatsApp()">CONFIRMAR POR WHATSAPP ✅</button>
-            <button class="btn-gris" onclick="vaciarCarrito()" style="margin-top:10px;">VACIAR CARRITO</button>
+            <input type="text" id="nombre-cliente" placeholder="Escribe tu nombre completo">
+            <button class="btn-rojo" style="background: #25D366;" onclick="enviarWhatsApp()">ENVIAR A WHATSAPP ✅</button>
         </div>
     </section>
 
