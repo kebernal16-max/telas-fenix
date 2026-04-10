@@ -38,3 +38,87 @@ textarea, select, input { width: 100%; padding: 12px; margin-bottom: 15px; borde
 .contenedor-productos { padding: 20px; display: grid; gap: 20px; }
 .producto-card { background: #111; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #333; }
 .producto-card img { width: 100%; border-radius: 8px; }
+/* MEJORAS DE DISEÑO 10/10 */
+:root { 
+    --rojo-brillante: #ff0000;
+    --dorado: #ffcc00;
+}
+
+/* Línea decorativa bajo el título */
+.linea-decorativa {
+    width: 60px;
+    height: 4px;
+    background: var(--rojo);
+    margin: 0 auto 30px;
+    border-radius: 2px;
+}
+
+/* Efecto en las tarjetas de producto */
+.producto-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    background: #0d0d0d !important;
+}
+
+.producto-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--rojo) !important;
+    box-shadow: 0 10px 30px rgba(204, 0, 0, 0.3);
+}
+
+.precio-tag {
+    color: var(--dorado);
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+/* Badge Premium */
+.badge-premium {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--dorado);
+    color: black;
+    padding: 4px 12px;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 20px;
+    z-index: 5;
+}
+
+/* Tabs de categorías */
+.categorias-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    padding: 0 10px;
+}
+
+.tab-btn {
+    background: #1a1a1a;
+    color: #888;
+    border: 1px solid #333;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: var(--rojo);
+    color: white;
+    border-color: var(--rojo);
+}
+
+/* Animación de entrada para las secciones */
+section {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
