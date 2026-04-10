@@ -1,9 +1,16 @@
 let carrito = [];
 let productoActual = {};
 
+// Generación automática de listas de imágenes
+const fotosFenix = [];
+for (let i = 1; i <= 62; i++) { fotosFenix.push(`fenix${i}.jpg`); }
+
+const fotosEstandar = [];
+for (let i = 1; i <= 20; i++) { fotosEstandar.push(`estandar${i}.jpg`); }
+
 const fotosProductos = {
-    'fenix': ['fenix1.jpg', 'fenix2.jpg', 'fenix3.jpg', 'fenix4.jpg', 'fenix5.jpg', 'fenix6.jpg', 'fenix7.jpg', 'fenix8.jpg', 'fenix9.jpg', 'fenix10.jpg', 'fenix11.jpg', 'fenix12.jpg'], 
-    'estandar': ['estandar1.jpg', 'estandar2.jpg', 'estandar3.jpg', 'estandar4.jpg', 'estandar5.jpg', 'estandar6.jpg'],
+    'fenix': fotosFenix,
+    'estandar': fotosEstandar,
     'capuchon': ['cap-mixto.jpg', 'cap-drill.jpg', 'cap-dacron.jpg'],
     'personalizado': ['personalizados1.jpg', 'personalizados2.jpg', 'personalizados3.jpg']
 };
